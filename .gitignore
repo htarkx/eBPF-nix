@@ -1,0 +1,20 @@
+# Nix build outputs
+/result
+/result-*/
+
+# Direnv / devenv shells
+/.direnv/
+/.devenv/
+.envrc
+
+# Temporary configure products (e.g. xdp-tutorial)
+config.*
+config.mk
+
+# Logs and misc
+*.log
+*.swp
+*~
+
+# Local include path shim
+.include-hack/
