@@ -68,6 +68,10 @@
             perf
             tcpdump
             zlib
+            go             
+            gopls        
+            delve    
+            gotools
           ];
 
           shellHook = ''
