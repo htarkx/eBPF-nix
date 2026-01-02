@@ -3,7 +3,7 @@
 This flake provides a reproducible development environment for XDP and other eBPF
 workloads. It keeps all toolchains, headers, and pkg-config metadata inside
 `/nix/store` so you can build standalone projects (such as `xdp-tutorial`)
-without depending on the host `/usr/include`.
+without depending on the host `/usr/include`. It only exposes a dev shell.
 
 ## Highlights
 
@@ -20,15 +20,6 @@ without depending on the host `/usr/include`.
 ```bash
 nix develop
 # or: nix shell .
-```
-
-## Home Manager
-
-This repo also exposes a Home Manager configuration that reads `USER` and `HOME`
-from the environment. Because of that, it must be evaluated in impure mode.
-
-```bash
-nix run github:nix-community/home-manager -- switch --flake .#current --impure
 ```
 
 Inside the shell you get `CC=clang`, `CXX=clang++`, and hardening disabled.

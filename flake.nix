@@ -4,17 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, nixvim, home-manager }:
-    let
-      envUser = builtins.getEnv "USER";
-      envHome = builtins.getEnv "HOME";
-    in
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -51,8 +43,6 @@
           pkgs.zlib
         ];
 
-        nvim = nixvim.legacyPackages.${system}.makeNixvim
-          (import ./nixvim.nix { inherit pkgs; });
       in
       {
         devShells.default = pkgs.mkShell {
@@ -120,20 +110,6 @@
             echo "Environment updated. Ready to compile."
           '';
         };
-
-        packages.nvim = nvim;
-        apps.nvim = { type = "app"; program = "${nvim}/bin/nvim"; };
-      }) // {
-        homeConfigurations.current = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { system = builtins.currentSystem; };
-          modules = [
-            ./home.nix
-            ({
-              home.username = envUser;
-              home.homeDirectory = envHome;
-              home.stateVersion = "23.11";
-            })
-          ];
-        };
-      };
+      }
+    );
 }
