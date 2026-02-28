@@ -19,6 +19,7 @@
           "${pkgs.pkgsi686Linux.glibc.dev}/include"
           "${pkgs.linuxHeaders}/include"
           "${pkgs.libbpf}/include"
+          "${pkgs.xdp-tools}/include"
           "${pkgs.libpcap}/include"  # Fixes missing pcap.h
           "${pkgs.libelf}/include"   # Keep libelf headers in path
         ];
@@ -50,9 +51,11 @@
 
           packages = with pkgs; [
             llvm.clang-unwrapped
+            llvm.clang-tools
             llvm.llvm
             gnumake
             pkg-config
+            bear
             m4
             glibc.dev
             pkgsi686Linux.glibc.dev
